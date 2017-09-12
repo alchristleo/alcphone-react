@@ -9,18 +9,24 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { BrowserRouter } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 import rootReducer from "./rootReducer";
+import { userLoggedIn } from "./actions/auth";
 
 const store = createStore(
-	rootReducer, 
+	rootReducer,
 	composeWithDevTools(applyMiddleware(thunk))
 );
+
+if(localStorage.alcphoneJWT){
+	const user = { token: localStorage.alcphoneJWT };
+	store.dispatch(userLoggedIn(user));
+}
 
 ReactDOM.render(
 	<BrowserRouter>
 		<Provider store={store}>
 			<App />
 		</Provider>
-	</BrowserRouter>, 
+	</BrowserRouter>,
 	document.getElementById('root')
 );
 registerServiceWorker();
