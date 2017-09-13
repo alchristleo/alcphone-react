@@ -1,4 +1,4 @@
-This is the client side/front-end of Alcphone created using ReactJS with redux. For the server side/back-end code you can find it (here)[https://github.com/alchristleo/alcphone-api]
+This is the client side/front-end of Alcphone created using ReactJS with redux. For the server side/back-end code you can find it [here](https://github.com/alchristleo/alcphone-api)
 
 ### This project consist of:
 1. Login page
