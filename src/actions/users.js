@@ -1,8 +1,8 @@
-import api from '../api';
-import { userLoggedIn } from './auth';
+import api from "../api";
+import { userLoggedIn } from "./auth";
 
 export const signup = data => dispatch =>
   api.user.signup(data).then(user => {
-    localStorage.alcphoneJWT = user.token;
-    dispatch(userLoggedIn(user))
+    localStorage.bookwormJWT = user.token;
+    dispatch(userLoggedIn(user));
   });

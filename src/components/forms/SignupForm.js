@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Form, Button } from 'semantic-ui-react';
-import isEmail from 'validator/lib/isEmail';
-import InlineError from '../messages/InlineError';
+import React from "react";
+import PropTypes from "prop-types";
+import { Form, Button } from "semantic-ui-react";
+import isEmail from "validator/lib/isEmail";
+import InlineError from "../messages/InlineError";
 
-class SignupForm extends React.Component{
+class SignupForm extends React.Component {
   state = {
     data: {
-      email: '',
-      password: ''
+      email: "",
+      password: ""
     },
     loading: false,
     errors: {}
@@ -24,7 +24,7 @@ class SignupForm extends React.Component{
     e.preventDefault();
     const errors = this.validate(this.state.data);
     this.setState({ errors });
-    if(Object.keys(errors).length === 0){
+    if (Object.keys(errors).length === 0) {
       this.setState({ loading: true });
       this.props
         .submit(this.state.data)
@@ -36,14 +36,15 @@ class SignupForm extends React.Component{
 
   validate = data => {
     const errors = {};
-    if(!isEmail(data.email)) errors.email = "Wrong email format!";
-    if(!data.password) errors.password = "Can't be blank!";
+
+    if (!isEmail(data.email)) errors.email = "Invalid email";
+    if (!data.password) errors.password = "Can't be blank";
 
     return errors;
   };
 
-  render(){
-    const{ data, loading, errors } = this.state;
+  render() {
+    const { data, errors, loading } = this.state;
 
     return (
       <Form onSubmit={this.onSubmit} loading={loading}>
@@ -53,7 +54,7 @@ class SignupForm extends React.Component{
             type="email"
             id="email"
             name="email"
-            placeholder="Your Email"
+            placeholder="email@email.com"
             value={data.email}
             onChange={this.onChange}
           />
@@ -66,18 +67,17 @@ class SignupForm extends React.Component{
             type="password"
             id="password"
             name="password"
-            placeholder="Your Password"
             value={data.password}
             onChange={this.onChange}
           />
           {errors.password && <InlineError text={errors.password} />}
         </Form.Field>
 
-        <Button primary>Signup</Button>
+        <Button primary>Sign Up</Button>
       </Form>
     );
   }
-};
+}
 
 SignupForm.propTypes = {
   submit: PropTypes.func.isRequired

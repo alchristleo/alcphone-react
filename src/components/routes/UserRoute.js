@@ -7,8 +7,7 @@ const UserRoute = ({ isAuthenticated, component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      isAuthenticated ? <Component {...props} /> : <Redirect to="/" />
-    }
+      isAuthenticated ? <Component {...props} /> : <Redirect to="/" />}
   />
 );
 
@@ -17,7 +16,7 @@ UserRoute.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired
 };
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
     isAuthenticated: !!state.user.token
   };
