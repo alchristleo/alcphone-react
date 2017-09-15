@@ -17,10 +17,10 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk))
 );
 
-if (localStorage.bookwormJWT) {
-  const payload = decode(localStorage.bookwormJWT);
+if (localStorage.alcphoneJWT) {
+  const payload = decode(localStorage.alcphoneJWT);
   const user = {
-    token: localStorage.bookwormJWT,
+    token: localStorage.alcphoneJWT,
     email: payload.email,
     confirmed: payload.confirmed
   };
