@@ -56,7 +56,7 @@ class ForgotPasswordForm extends React.Component {
           {errors.email && <InlineError text={errors.email} />}
         </Form.Field>
 
-        <Button primary>Login</Button>
+        <Button primary>Send email</Button>
       </Form>
     );
   }
