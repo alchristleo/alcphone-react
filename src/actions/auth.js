@@ -26,3 +26,9 @@ export const confirm = token => dispatch =>
     localStorage.alcphoneJWT = user.token;
     dispatch(userLoggedIn(user));
   });
+
+export const resetPasswordRequest = ({ email }) => () =>
+  api.user.resetPasswordRequest(email);
+
+export const validateToken = (token) => () =>
+  api.user.validateToken(token);
