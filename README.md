@@ -1,11 +1,15 @@
 This is the client side/front-end of Alcphone created using ReactJS, eslint, and redux. For the server side/back-end code you can find it [here](https://github.com/alchristleo/alcphone-api)
 
 ### This project consist of:
-1. Login page
-2. Sign up page
-3. Confirmation email page
-4. Dashboard page
+1. Login page (user and admin)
+2. Sign up page (user and admin)
+3. Confirmation email page (user and admin)
+4. Dashboard page (user and admin)
 5. Forgot password page
+
+### Ongoing page:
+1. Navigation page
+2. Smart UI
 
 ### How to run
 ```
