@@ -1,4 +1,4 @@
-import { USER_LOGGED_IN, USER_LOGGED_OUT } from "../types";
+import { USER_LOGGED_IN, USER_LOGGED_OUT, ADMIN_LOGGED_IN, ADMIN_LOGGED_OUT } from "../types";
 import api from "../api";
 
 export const userLoggedIn = user => ({
@@ -8,6 +8,15 @@ export const userLoggedIn = user => ({
 
 export const userLoggedOut = () => ({
   type: USER_LOGGED_OUT
+});
+
+export const adminLoggedIn = admin => ({
+  type: ADMIN_LOGGED_IN,
+  admin
+});
+
+export const adminLoggedOut = () => ({
+  type: ADMIN_LOGGED_OUT
 });
 
 export const login = credentials => dispatch =>
@@ -21,10 +30,27 @@ export const logout = () => dispatch => {
   dispatch(userLoggedOut());
 };
 
+export const adminLogin = credentials => dispatch =>
+  api.admin.adminLogin(credentials).then(admin => {
+    localStorage.alcphoneAdminJWT = admin.token;
+    dispatch(adminLoggedIn(admin));
+  });
+
+export const adminLogout = () => dispatch => {
+  localStorage.removeItem("alcphoneAdminJWT");
+  dispatch(adminLoggedOut());
+}
+
 export const confirm = token => dispatch =>
   api.user.confirm(token).then(user => {
     localStorage.alcphoneJWT = user.token;
     dispatch(userLoggedIn(user));
+  });
+
+export const adminConfirm = token => dispatch =>
+  api.admin.adminConfirm(token).then(admin => {
+    localStorage.alcphoneAdminJWT = admin.token;
+    dispatch(adminLoggedIn(admin));
   });
 
 export const resetPasswordRequest = ({ email }) => () =>

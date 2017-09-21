@@ -10,7 +10,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import rootReducer from "./rootReducer";
-import { userLoggedIn } from "./actions/auth";
+import { userLoggedIn, adminLoggedIn } from "./actions/auth";
 
 const store = createStore(
   rootReducer,
@@ -25,6 +25,14 @@ if (localStorage.alcphoneJWT) {
     confirmed: payload.confirmed
   };
   store.dispatch(userLoggedIn(user));
+}else if (localStorage.alcphoneAdminJWT) {
+  const payload = decode(localStorage.alcphoneAdminJWT);
+  const admin = {
+    token: localStorage.alcphoneAdminJWT,
+    email: payload.email,
+    confirmed: payload.confirmed
+  };
+  store.dispatch(adminLoggedIn(admin));
 }
 
 ReactDOM.render(

@@ -14,5 +14,14 @@ export default {
       axios.post("/api/auth/validate_token", { token }),
     resetPassword: data =>
       axios.post("/api/auth/reset_password", { data })
+  },
+
+  admin: {
+    adminLogin: credentials =>
+      axios.post("/api/auth/admin", { credentials }).then(res => res.data.admin),
+    adminSignup: admin =>
+      axios.post("/api/admin", { admin }).then(res => res.data.admin),
+    adminConfirm: token =>
+      axios.post("/api/auth/admin/confirmation", { token }).then(res => res.data.admin),
   }
 };
