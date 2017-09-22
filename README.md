@@ -10,7 +10,7 @@ This is the client side/front-end of Alcphone created using ReactJS, eslint, and
 ### Ongoing page:
 1. Navigation page
 2. Smart UI
-3. New Phone page
+3. New Application page
 
 ### How to run
 ```
