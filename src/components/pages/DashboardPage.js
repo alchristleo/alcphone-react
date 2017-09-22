@@ -2,20 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ConfirmEmailMessage from "../messages/ConfirmEmailMessage";
-import { allPhonesSelector } from "../../reducers/phones";
-import AddPhone from "../phones/AddPhone";
+import { allApplicationSelector } from "../../reducers/application";
+import AddApplication from "../phones/AddApplication";
 
-const DashboardPage = ({ isConfirmed, phones }) => (
+const DashboardPage = ({ isConfirmed, application }) => (
   <div>
     {!isConfirmed && <ConfirmEmailMessage />}
 
-    {phones.length === 0 && <AddPhone />}
+    {application.length === 0 && <AddApplication />}
   </div>
 );
 
 DashboardPage.propTypes = {
   isConfirmed: PropTypes.bool.isRequired,
-  phones: PropTypes.arrayOf(PropTypes.shape({
+  application: PropTypes.arrayOf(PropTypes.shape({
   	name: PropTypes.string.isRequired
   }).isRequired).isRequired
 };
@@ -23,7 +23,7 @@ DashboardPage.propTypes = {
 function mapStateToProps(state) {
   return {
     isConfirmed: !!state.user.confirmed,
-    phones: allPhonesSelector(state)
+    application: allApplicationSelector(state)
   };
 }
 

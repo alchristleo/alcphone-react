@@ -1,4 +1,6 @@
 import React from "react";
+import { Segment } from "semantic-ui-react";
+import SearchApplicationForm from "../forms/SearchApplicationForm";
 
 class NewPhonePage extends React.Component{
 	state = {
@@ -6,9 +8,12 @@ class NewPhonePage extends React.Component{
 	};
 
 	render(){
-		return {
-			
-		}
+		return (
+			<Segment>
+				<h1>Add new application to your phone</h1>
+				<SearchApplicationForm />
+			</Segment>
+		);
 	};
 };
 
