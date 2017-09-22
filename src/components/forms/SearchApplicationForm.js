@@ -1,28 +1,42 @@
 import React from "react";
+import axios from "axios";
 import { Form, Dropdown } from "semantic-ui-react";
 
 class SearchApplicationForm extends React.Component{
 	state = {
 		query: '',
 		loading: false,
-		options: [{
-			key: 1,
-			value: 1, 
-			text: "first phone"
-		},{
-			key: 1,
-			value: 2, 
-			text: "first phone"
-		}],
+		options: [],
 		application: {}
+	}
+
+	onSearchChange = (e, data) => {
+		clearTimeout(this.timer);
+		this.setState({
+			query: data
+		});
+		this.timer = setTimeout(this.fetchOptions, 1000);
+	}
+
+	fetchOptions = () => {
+		if(!this.state.query) return;
+		this.setState({ loading: true });
+		axios.get(`/api/app/search?q=${this.state.query}`)
+			.then(res => res.data.application);
 	}
 
 	render(){
 		return (
 			<Form>
-				<Dropdown search fluid placeholder="Search for an application">
-
-				</Dropdown>
+				<Dropdown 
+					search 
+					fluid 
+					placeholder="Search for an application"
+					value={this.state.query}
+					onSearchChange={this.onSearchChange}
+					options={this.state.options}
+					loading={this.state.loading} 
+				/>
 			</Form>
 		);
 	};
