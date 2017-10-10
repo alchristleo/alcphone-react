@@ -32,6 +32,7 @@ react-router-dom
 redux
 redux-devtools-extensio
 redux-thunk
+reselect
 semantic-ui-css
 semantic-ui-react
 validator
