@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";  
-//navigation
+// navigation
 import NavigationMenu from "./components/navigation/NavigationMenu";
-//user
+// user
 import HomePage from "./components/pages/HomePage";
 import LoginPage from "./components/pages/LoginPage";
 import DashboardPage from "./components/pages/DashboardPage";
@@ -12,13 +12,13 @@ import SignupPage from "./components/pages/SignupPage";
 import ConfirmationPage from "./components/pages/ConfirmationPage";
 import ForgotPasswordPage from "./components/pages/ForgotPasswordPage";
 import ResetPasswordPage from "./components/pages/ResetPasswordPage";
-import NewPhonePage from "./components/pages/NewPhonePage";
-//admin
+import NewBookPage from "./components/pages/NewBookPage";
+// admin
 import AdminLoginPage from "./components/pages/admin/AdminLoginPage";
 import AdminDashboardPage from "./components/pages/admin/AdminDashboardPage";
 import AdminSignupPage from "./components/pages/admin/AdminSignupPage";
 import AdminConfirmationPage from "./components/pages/admin/AdminConfirmationPage";
-//route
+// route
 import UserRoute from "./components/routes/UserRoute";
 import GuestRoute from "./components/routes/GuestRoute";
 import AdminLoginRoute from "./components/routes/AdminLoginRoute";
@@ -82,7 +82,7 @@ const App = ({ location, isAuthenticated }) => (
       location={location}
       path="/my-phones/new"
       exact
-      component={NewPhonePage}
+      component={NewBookPage}
     />
     <AdminRoute
       location={location}

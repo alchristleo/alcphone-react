@@ -3,17 +3,17 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { Form, Dropdown } from "semantic-ui-react";
 
-class SearchApplicationForm extends React.Component{
+class SearchBookForm extends React.Component{
 	state = {
 		query: '',
 		loading: false,
 		options: [],
-		application: {}
+		books: {}
 	};
 
 	onChange = (e, data) => {
 		this.setState({ query: data.value });
-		this.props.onAppSelect(this.state.application[data.value]);
+		this.props.onBookSelect(this.state.books[data.value]);
 	};
 
 	onSearchChange = (e, data) => {
@@ -27,20 +27,20 @@ class SearchApplicationForm extends React.Component{
 	fetchOptions = () => {
 		if(!this.state.query) return;
 		this.setState({ loading: true });
-		axios.get(`/api/app/search?q=${this.state.query}`)
-			.then(res => res.data.application)
-			.then(application => {
+		axios.get(`/api/books/search?q=${this.state.query}`)
+			.then(res => res.data.books)
+			.then(books => {
 				const options = [];
-				const appHash = {};
-				application.forEach(app => {
-					appHash[app.appId] = app;
+				const bookHash = {};
+				books.forEach(book => {
+					bookHash[book.bookId] = book;
 					options.push({
-						key: app.appId,
-						value: app.appId,
-						text: app.name
+						key: book.bookId,
+						value: book.bookId,
+						text: book.title
 					});
 				});
-				this.setState({ loading: false, options, application: appHash })	
+				this.setState({ loading: false, options, books: bookHash })	
 			});
 	};
 
@@ -50,7 +50,7 @@ class SearchApplicationForm extends React.Component{
 				<Dropdown 
 					search 
 					fluid 
-					placeholder="Search for an application"
+					placeholder="Search a book"
 					value={this.state.query}
 					onSearchChange={this.onSearchChange}
 					options={this.state.options}
@@ -62,8 +62,8 @@ class SearchApplicationForm extends React.Component{
 	};
 };
 
-SearchApplicationForm.propTypes = {
-	onAppSelect: PropTypes.func.isRequired
+SearchBookForm.propTypes = {
+	onBookSelect: PropTypes.func.isRequired
 }
 
-export default SearchApplicationForm;
+export default SearchBookForm;

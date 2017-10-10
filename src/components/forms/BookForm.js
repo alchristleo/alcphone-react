@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import { Form, Button, Segment, Grid, Image } from "semantic-ui-react";
 import InlineError from "../messages/InlineError";
 
-class AppForm extends React.Component {
+class BookForm extends React.Component {
   state = {
     data: {
-      appId: this.props.application.appId,
-      name: this.props.application.name,
-      developer: this.props.application.developer,
-      logo: this.props.application.logo
+      bookId: this.props.books.bookId,
+      title: this.props.books.title,
+      author: this.props.books.author,
+      cover: this.props.books.cover,
     },
     loading: false,
     errors: {}
@@ -18,10 +18,10 @@ class AppForm extends React.Component {
   componentWillReceiveProps(props){
     this.setState({
       data: {
-        appId: props.application.appId,
-        name: props.application.name,
-        developer: props.application.developer,
-        logo: props.application.logo
+        bookId: props.books.bookId,
+        title: props.books.title,
+        author: props.books.author,
+        cover: props.books.cover
       }
     });
   }
@@ -49,9 +49,9 @@ class AppForm extends React.Component {
   validate = data => {
     const errors = {};
 
-    if (!data.name) errors.name = "Can't be blank";
-    if (!data.developer) errors.developer = "Can't be blank";
-    if (!data.logo) errors.logo = "Can't be blank";
+    if (!data.title) errors.title = "Can't be blank";
+    if (!data.author) errors.author = "Can't be blank";
+    if (!data.cover) errors.cover = "Can't be blank";
 
     return errors;
   };
@@ -65,35 +65,35 @@ class AppForm extends React.Component {
           <Grid columns={2} className="fluid" stackable>
             <Grid.Row>
               <Grid.Column>
-                <Form.Field error={!!errors.name}>
-                  <label htmlFor="name">Application name</label>
+                <Form.Field error={!!errors.title}>
+                  <label htmlFor="name">Books Title</label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
-                    placeholder="Application name"
-                    value={data.name}
+                    id="title"
+                    name="title"
+                    placeholder="Books Title"
+                    value={data.title}
                     onChange={this.onChange}
                   />
-                  {errors.name && <InlineError text={errors.name} />}
+                  {errors.title && <InlineError text={errors.title} />}
                 </Form.Field>
 
-                <Form.Field error={!!errors.developer}>
-                  <label htmlFor="developer">Application developer</label>
+                <Form.Field error={!!errors.author}>
+                  <label htmlFor="author">Books Author</label>
                   <input
                     type="text"
-                    id="developer"
-                    name="developer"
-                    placeholder="Application developer"
-                    value={data.developer}
+                    id="author"
+                    name="author"
+                    placeholder="Books author"
+                    value={data.author}
                     onChange={this.onChange}
                   />
-                  {errors.developer && <InlineError text={errors.developer} />}
+                  {errors.author && <InlineError text={errors.author} />}
                 </Form.Field>
               </Grid.Column>
 
               <Grid.Column>
-                <Image size="small" src={data.logo} />
+                <Image size="small" src={data.cover} />
               </Grid.Column>
             </Grid.Row>
 
@@ -107,14 +107,14 @@ class AppForm extends React.Component {
   }
 }
 
-AppForm.propTypes = {
+BookForm.propTypes = {
   submit: PropTypes.func.isRequired,
-  application: PropTypes.shape({
-    appId: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    developer: PropTypes.string.isRequired,
-    logo: PropTypes.string.isRequired 
+  books: PropTypes.shape({
+    bookId: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    cover: PropTypes.string.isRequired 
   }).isRequired
 };
 
-export default AppForm;
+export default BookForm;

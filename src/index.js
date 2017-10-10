@@ -11,6 +11,7 @@ import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import rootReducer from "./rootReducer";
 import { userLoggedIn, adminLoggedIn } from "./actions/auth";
+import setAuthorizationHeader from './utils/setAuthorizationHeader';
 
 const store = createStore(
   rootReducer,
@@ -24,6 +25,7 @@ if (localStorage.alcphoneJWT) {
     email: payload.email,
     confirmed: payload.confirmed
   };
+  setAuthorizationHeader(localStorage.alcphoneJWT);
   store.dispatch(userLoggedIn(user));
 }else if (localStorage.alcphoneAdminJWT) {
   const payload = decode(localStorage.alcphoneAdminJWT);
@@ -32,6 +34,7 @@ if (localStorage.alcphoneJWT) {
     email: payload.email,
     confirmed: payload.confirmed
   };
+  setAuthorizationHeader(localStorage.alcphoneAdminJWT);
   store.dispatch(adminLoggedIn(admin));
 }
 

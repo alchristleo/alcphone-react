@@ -2,8 +2,8 @@ import { combineReducers } from "redux";
 
 import user from "./reducers/user";
 import admin from "./reducers/admin";
-import application from "./reducers/application";
+import books from "./reducers/books";
 
 export default combineReducers({
-  user, admin, application
+  user, admin, books
 });
