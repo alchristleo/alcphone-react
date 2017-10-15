@@ -23,5 +23,10 @@ export default {
       axios.post("/api/admin", { admin }).then(res => res.data.admin),
     adminConfirm: token =>
       axios.post("/api/auth/admin/confirmation", { token }).then(res => res.data.admin),
+  },
+
+  books: {
+    fetchAll: () => axios.get('/api/books').then(res => res.data.books),
+    create: book => axios.post('/api/books', { book }).then(res => res.data.book) 
   }
 };

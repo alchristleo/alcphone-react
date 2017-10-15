@@ -33,10 +33,10 @@ class SearchBookForm extends React.Component{
 				const options = [];
 				const bookHash = {};
 				books.forEach(book => {
-					bookHash[book.bookId] = book;
+					bookHash[book.goodreadsId] = book;
 					options.push({
-						key: book.bookId,
-						value: book.bookId,
+						key: book.goodreadsId,
+						value: book.goodreadsId,
 						text: book.title
 					});
 				});

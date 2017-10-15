@@ -1,28 +1,33 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Form, Button, Segment, Grid, Image } from "semantic-ui-react";
+import { Form, Button, Grid, Segment, Image } from "semantic-ui-react";
 import InlineError from "../messages/InlineError";
 
 class BookForm extends React.Component {
   state = {
     data: {
-      bookId: this.props.books.bookId,
-      title: this.props.books.title,
-      author: this.props.books.author,
-      cover: this.props.books.cover,
+      goodreadsId: this.props.book.goodreadsId,
+      title: this.props.book.title,
+      author: this.props.book.author,
+      cover: this.props.book.covers[0],
+      pages: this.props.book.pages
     },
+    covers: this.props.book.covers,
+    index: 0,
     loading: false,
     errors: {}
   };
 
-  componentWillReceiveProps(props){
+  componentWillReceiveProps(props) {
     this.setState({
       data: {
-        bookId: props.books.bookId,
-        title: props.books.title,
-        author: props.books.author,
-        cover: props.books.cover
-      }
+        goodreadsId: props.book.goodreadsId,
+        title: props.book.title,
+        author: props.book.author,
+        cover: props.book.covers[0],
+        pages: props.book.pages
+      },
+      covers: props.book.covers
     });
   }
 
@@ -30,6 +35,15 @@ class BookForm extends React.Component {
     this.setState({
       ...this.state,
       data: { ...this.state.data, [e.target.name]: e.target.value }
+    });
+
+  onChangeNumber = e =>
+    this.setState({
+      ...this.state,
+      data: {
+        ...this.state.data,
+        [e.target.name]: parseInt(e.target.value, 10)
+      }
     });
 
   onSubmit = e => {
@@ -41,37 +55,45 @@ class BookForm extends React.Component {
       this.props
         .submit(this.state.data)
         .catch(err =>
-          this.setState({ errors: err.response.data.errors, loading: false })
+          // this.setState({ errors: err.response.data.errors, loading: false })
+          console.log(err)
         );
     }
   };
 
+  changeCover = () => {
+    const { index, covers } = this.state;
+    const newIndex = index + 1 >= covers.length ? 0 : index + 1;
+    this.setState({
+      index: newIndex,
+      data: { ...this.state.data, cover: covers[newIndex] }
+    });
+  };
+
   validate = data => {
     const errors = {};
-
     if (!data.title) errors.title = "Can't be blank";
     if (!data.author) errors.author = "Can't be blank";
-    if (!data.cover) errors.cover = "Can't be blank";
-
+    if (!data.pages) errors.pages = "Can't be blank";
     return errors;
   };
 
   render() {
-    const { data, errors, loading } = this.state;
+    const { errors, data, loading } = this.state;
 
     return (
       <Segment>
         <Form onSubmit={this.onSubmit} loading={loading}>
-          <Grid columns={2} className="fluid" stackable>
+          <Grid columns={2} stackable>
             <Grid.Row>
               <Grid.Column>
                 <Form.Field error={!!errors.title}>
-                  <label htmlFor="name">Books Title</label>
+                  <label htmlFor="title">Book Title</label>
                   <input
                     type="text"
                     id="title"
                     name="title"
-                    placeholder="Books Title"
+                    placeholder="Title"
                     value={data.title}
                     onChange={this.onChange}
                   />
@@ -79,21 +101,39 @@ class BookForm extends React.Component {
                 </Form.Field>
 
                 <Form.Field error={!!errors.author}>
-                  <label htmlFor="author">Books Author</label>
+                  <label htmlFor="author">Book Author</label>
                   <input
                     type="text"
                     id="author"
                     name="author"
-                    placeholder="Books author"
+                    placeholder="Author"
                     value={data.author}
                     onChange={this.onChange}
                   />
                   {errors.author && <InlineError text={errors.author} />}
                 </Form.Field>
+
+                <Form.Field error={!!errors.pages}>
+                  <label htmlFor="pages">Pages</label>
+                  <input
+                    disabled={data.pages === undefined}
+                    type="text"
+                    id="pages"
+                    name="pages"
+                    value={data.pages !== undefined ? data.pages : "Loading..."}
+                    onChange={this.onChangeNumber}
+                  />
+                  {errors.pages && <InlineError text={errors.pages} />}
+                </Form.Field>
               </Grid.Column>
 
               <Grid.Column>
                 <Image size="small" src={data.cover} />
+                {this.state.covers.length > 1 && (
+                  <a role="button" tabIndex={0} onClick={this.changeCover}>
+                    Another cover
+                  </a>
+                )}
               </Grid.Column>
             </Grid.Row>
 
@@ -109,11 +149,12 @@ class BookForm extends React.Component {
 
 BookForm.propTypes = {
   submit: PropTypes.func.isRequired,
-  books: PropTypes.shape({
-    bookId: PropTypes.string.isRequired,
+  book: PropTypes.shape({
+    goodreadsId: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
-    cover: PropTypes.string.isRequired 
+    covers: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    pages: PropTypes.number
   }).isRequired
 };
 

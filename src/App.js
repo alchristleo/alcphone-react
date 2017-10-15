@@ -80,7 +80,7 @@ const App = ({ location, isAuthenticated }) => (
     />
     <UserRoute
       location={location}
-      path="/my-phones/new"
+      path="/my-phones/new-books"
       exact
       component={NewBookPage}
     />
